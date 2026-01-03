@@ -38,7 +38,14 @@ Master AI app development from chatbots to production-ready RAG systems and inte
    uv pip install -e .
    ```
 
-2. **Configure Snowflake secrets**
+   `requirements.txt`:
+   ```
+   streamlit==1.52.0
+   snowflake-ml-python==1.20.0
+   snowflake-snowpark-python==1.44.0
+   ```
+
+3. **Configure Snowflake secrets**
    
    Create `.streamlit/secrets.toml` in your project root:
    ```toml
@@ -54,7 +61,7 @@ Master AI app development from chatbots to production-ready RAG systems and inte
    
    **Important:** Add `.streamlit/secrets.toml` to `.gitignore` — never commit secrets!
 
-3. **Run the app**
+4. **Run the app**
    ```bash
    cd app
    streamlit run day1.py
