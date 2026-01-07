@@ -1,4 +1,4 @@
-For today's challenge, our goal is to **build a "LinkedIn Post Generator" web app**. Here, we'll integrate a **Streamlit frontend** with **Snowflake's Cortex AI** to generate text based on user-defined parameters. Particularly, the tool drafts social media content using the Claude 3.5 Sonnet model.
+For today's challenge, our goal is to build a v2 of the **"LinkedIn Post Generator" web app**. Here, we'll integrate a **Streamlit frontend** with **Snowflake's Cortex AI** to generate text based on user-defined parameters. Particularly, the tool drafts social media content using the Claude 3.5 Sonnet model.
 
 ---
 
