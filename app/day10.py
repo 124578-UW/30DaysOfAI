@@ -15,10 +15,18 @@ except:
     from snowflake.snowpark import Session
     session = Session.builder.configs(st.secrets["connections"]["snowflake"]).create()
 
-def call_llm(prompt_text: str) -> str:
-    """Call Snowflake Cortex LLM."""
+def call_llm(messages: list) -> str:
+    """Call Snowflake Cortex LLM with conversation history."""
+    # Format messages as conversation context
+    conversation = ""
+    for msg in messages:
+        role = "User" if msg["role"] == "user" else "Assistant"
+        conversation += f"{role}: {msg['content']}\n\n"
+    
+    conversation += "Assistant:"
+    
     df = session.range(1).select(
-        ai_complete(model="claude-3-5-sonnet", prompt=prompt_text).alias("response")
+        ai_complete(model="claude-3-5-sonnet", prompt=conversation).alias("response")
     )
     response_raw = df.collect()[0][0]
     response_json = json.loads(response_raw)
@@ -49,7 +57,7 @@ if prompt := st.chat_input("What would you like to know?"):
     
     # Generate and display assistant response
     with st.chat_message("assistant"):
-        response = call_llm(prompt)
+        response = call_llm(st.session_state.messages)
         st.write(response)
     
     # Add assistant response to state
