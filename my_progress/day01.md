@@ -11,3 +11,10 @@ The response I got: New Delhi is the capital city of India. It is located in the
 Day 3 
 
 The goal of Day 3 is to run snowflake cortex LLM using the snowflake.cortex complete python API. It allows the user select a model, enter a prompt and generates response. It streams the response. With streaming the words are seen immediately. Streaming matters because it will make the app feel more responsive and quick even if it takes the same time. 
+
+Day 4
+
+The goal is to understand why caching matters by running a st web app that connects to cortex LLM in snowflake, let's user enter a prompt, it is sent to a powerful model like claude which runs securely in snowflake. The response is displayed along with the time it took to generate the response. When the prompt is the same it takes less than .01 seconds to generate the response. When the prompt is slightly different the LLM runs again. 
+Prompt 1: what is 2+2 equals? 1.16 seconds
+Prompt 2: what is 2+2? 1.17 seconds 
+This is called cache miss. @st.cache_data is a decorator in streamlit that is used to save a response.
