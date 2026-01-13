@@ -7,9 +7,11 @@ Building on Day 11's foundation (conversation history and sidebar stats), today 
 Day 12 focuses on adding one key enhancement: **streaming responses**.
 
 #### What's Kept from Previous Days:
-- :material/check_circle: Welcome message on initialization
-- :material/check_circle: Full conversation history passed to LLM
-- :material/check_circle: Chat interface with `st.chat_message()`
+- :material/check_circle: Welcome message on initialization (Day 11)
+- :material/check_circle: Full conversation history passed to LLM (Day 11)
+- :material/check_circle: Sidebar with conversation stats (Day 11)
+- :material/check_circle: Clear History button (Day 11)
+- :material/check_circle: Chat interface with `st.chat_message()` (Days 8-11)
 
 #### What's New: Streaming Responses
 
@@ -35,6 +37,7 @@ with st.chat_message("assistant"):
 
 # Add assistant response to state
 st.session_state.messages.append({"role": "assistant", "content": response})
+st.rerun()  # Force rerun to update sidebar stats
 ```
 
 **What changed from Day 11:**
@@ -47,6 +50,7 @@ st.session_state.messages.append({"role": "assistant", "content": response})
 * **`st.spinner("Processing")`**: Wraps the streaming to show a loading indicator while fetching the initial response.
 * **`st.write_stream(stream_generator)`**: Streamlit's streaming display function, fed by our custom generator.
 * **`response = ...`**: Returns the complete text once streaming finishes, which we store in message history.
+* **`st.rerun()`**: Forces app rerun to immediately update sidebar stats after each response.
 
 **Why this approach:**
 
@@ -64,4 +68,3 @@ When this code runs, you will have a chatbot with conversation history **plus** 
 - [Cortex Complete Streaming](https://docs.snowflake.com/en/user-guide/snowflake-cortex/llm-functions#streaming-responses)
 - [st.write_stream Documentation](https://docs.streamlit.io/develop/api-reference/write-magic/st.write_stream)
 - [Build Conversational Apps](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps)
-
