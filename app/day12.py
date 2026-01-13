@@ -35,6 +35,20 @@ if "messages" not in st.session_state:
         {"role": "assistant", "content": "Hello! I'm your AI assistant. How can I help you today?"}
     ]
 
+# Sidebar to show conversation stats
+with st.sidebar:
+    st.header("Conversation Stats")
+    user_msgs = len([m for m in st.session_state.messages if m["role"] == "user"])
+    assistant_msgs = len([m for m in st.session_state.messages if m["role"] == "assistant"])
+    st.metric("Your Messages", user_msgs)
+    st.metric("AI Responses", assistant_msgs)
+    
+    if st.button("Clear History"):
+        st.session_state.messages = [
+            {"role": "assistant", "content": "Hello! I'm your AI assistant. How can I help you today?"}
+        ]
+        st.rerun()
+
 # Display all messages from history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -68,6 +82,7 @@ if prompt := st.chat_input("Type your message..."):
     
     # Add assistant response to state
     st.session_state.messages.append({"role": "assistant", "content": response})
+    st.rerun()  # Force rerun to update sidebar stats
 
 st.divider()
 st.caption("Day 12: Streaming Responses | 30 Days of AI")
