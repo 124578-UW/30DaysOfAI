@@ -4,6 +4,55 @@ For today's challenge, our goal is to enhance our chatbot with better history ma
 
 ---
 
+### :material/bug_report: The Problem from Day 10
+
+In Day 10, we stored messages in session state, so they appeared in the UI. But the LLM didn't actually see that history:
+
+**Example Conversation (Day 10 behavior):**
+```
+User: "What's the capital of France?"
+AI: "Paris"
+
+User: "What's the population?"
+AI: "What location are you asking about?" ❌
+```
+
+You can **see** your previous question on screen, but the AI can't! This creates a confusing experience where the chat interface looks like it remembers, but the AI has no memory.
+
+**Why?** Because we were only sending the current prompt to the LLM:
+```python
+response = call_llm(prompt)  # Only sends current message!
+```
+
+### :material/check_circle: The Solution (Day 11)
+
+Today, we fix this by passing the **full conversation history** to the LLM:
+
+**Same Conversation (Day 11 behavior):**
+```
+User: "What's the capital of France?"
+AI: "Paris"
+
+User: "What's the population?"
+AI: "Paris has approximately 2.1 million people in the city proper..." ✅
+```
+
+Now the AI can answer follow-up questions, reference earlier topics, and maintain context throughout the conversation!
+
+**How?** By building and sending the complete conversation:
+```python
+# Build the full conversation history for context
+conversation = "\n\n".join([
+    f"{'User' if msg['role'] == 'user' else 'Assistant'}: {msg['content']}"
+    for msg in st.session_state.messages
+])
+full_prompt = f"{conversation}\n\nAssistant:"
+
+response = call_llm(full_prompt)  # Sends entire conversation!
+```
+
+---
+
 ### :material/settings: How It Works: Step-by-Step
 
 Let's break down what each part of the code does.

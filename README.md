@@ -1,4 +1,4 @@
-# 30 Days Of AI with Streamlit 🎈
+# 30 Days Of AI with Streamlit 🎈     
 
 Welcome to **#30DaysOfAI** — a comprehensive 30-day challenge to learn, build, and deploy AI-powered applications using [Streamlit](https://streamlit.io) and [Snowflake Cortex AI](https://docs.snowflake.com/en/user-guide/snowflake-cortex/overview).
 
